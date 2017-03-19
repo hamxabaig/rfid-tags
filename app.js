@@ -6,7 +6,7 @@
 const Hapi = require('hapi');
 const Config = require('./config');
 const mongoose = require('mongoose');
-const SerialPort = require('serialport').SerialPort;
+const serialport = require('serialport');
 const server = new Hapi.Server();
 const Co = require('co');
 
@@ -17,13 +17,27 @@ mongoose.connect('mongodb://localhost/wms').then(function (err) {
         console.log('error connecting mongoose');
     }
 });
+const io = require('socket.io')(server.listener);
 
-var port = new SerialPort('/dev/cu.usbmodem1421', {
-    baudRate: 57600
+var port = new serialport('/dev/cu.usbmodem1421', {
+    baudRate: 9600,
+    parser: serialport.parsers.readline("\n")
+});
+console.log(io);
+
+io.on('connection', function (socket) {
+    socket.emit('oh hello');
+   socket.on('reply', function () {
+       port.write('YES');
+   });
 });
 
+port.on('open', function () {
+    console.log('opened');
+});
 port.on('data', function (data) {
-    console.log('Data: ' + data[0]);
+    console.log('Data: ' + data);
+    io.emit('broadcast', 'Please confirm to issue weapon');
 });
 
 Co(function*() {
