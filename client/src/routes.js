@@ -9,7 +9,7 @@ import { routerActions } from 'react-router-redux'
 import { UserAuthWrapper } from 'redux-auth-wrapper'
 
 import NotFoundPage from './containers/pages/NotFoundPage'
-import Layout from './containers/layout'
+import Layout from './containers/Layout'
 import HomePage from './containers/pages/HomePage'
 import GithubPage from './containers/pages/GithubPage'
 import LoginPage from './containers/pages/LoginPage'
