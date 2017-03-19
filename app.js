@@ -5,10 +5,15 @@
 'use strict';
 const Hapi = require('hapi');
 const Config = require('./config');
+const mongoose = require('mongoose');
 const server = new Hapi.Server();
 const Co = require('co');
 
-server.connection({ port: Config.PORT, routes: { cors: true , jsonp: 'callback' } });
+server.connection({port: Config.PORT, routes: {cors: true, jsonp: 'callback'}});
+
+mongoose.connect('mongodb://localhost/wms').then(function (err) {
+
+});
 
 Co(function*() {
 
@@ -28,7 +33,11 @@ Co(function*() {
         yield require('./server/plugins/react-settings')(server);
     }
 
-    server.route( { method: 'GET', path: '/{path*}', config: {auth: false,  handler: { directory: { path: './public' ,redirectToSlash: true } } } });
+    server.route({
+        method: 'GET',
+        path: '/{path*}',
+        config: {auth: false, handler: {directory: {path: './public', redirectToSlash: true}}}
+    });
     server.route(require('./server/routes/api'));
     server.route(require('./server/routes/user'));
 
@@ -36,7 +45,7 @@ Co(function*() {
     server.start((err) => {
 
         if (err) {
-            server.log(['error', 'server'],'Server Error Occured' + err);
+            server.log(['error', 'server'], 'Server Error Occured' + err);
             process.exit();
         }
         server.log(['info', 'server'], 'Server environment: ' + Config.NODE_ENV);
@@ -44,17 +53,17 @@ Co(function*() {
     });
 
 
-}).catch( (e) => {
+}).catch((e) => {
 
-    server.log('app.js error:',e);
-    server.log('stack - ',e.stack);
+    server.log('app.js error:', e);
+    server.log('stack - ', e.stack);
 });
 
 process.on('SIGINT', () => {
 
     // My process has received a SIGINT signal
     // Meaning PM2 is now trying to stop the process
-    server.stop({ timeout:1000 }, (err) => {
+    server.stop({timeout: 1000}, (err) => {
 
         if (err) {
             console.error(err);
