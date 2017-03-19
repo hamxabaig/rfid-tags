@@ -9,7 +9,6 @@ const internals = {};
 internals.getUserRole = function (request) {
     const role = _.get(request.pre.authInfo, 'role');
     console.log('User Role',role);
-
     return role;
 };
 

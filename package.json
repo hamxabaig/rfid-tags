@@ -75,6 +75,8 @@
     "redux-auth-wrapper": "^0.8.x",
     "redux-thunk": "^2.1.x",
     "scooter": "^4.0.0",
+    "serialport": "^4.0.7",
+    "socket.io": "^1.7.3",
     "store": "1.3.20",
     "vision": "^4.1.0"
   },

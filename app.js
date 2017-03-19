@@ -6,13 +6,24 @@
 const Hapi = require('hapi');
 const Config = require('./config');
 const mongoose = require('mongoose');
+const SerialPort = require('serialport').SerialPort;
 const server = new Hapi.Server();
 const Co = require('co');
 
 server.connection({port: Config.PORT, routes: {cors: true, jsonp: 'callback'}});
 
 mongoose.connect('mongodb://localhost/wms').then(function (err) {
+    if (err) {
+        console.log('error connecting mongoose');
+    }
+});
 
+var port = new SerialPort('/dev/cu.usbmodem1421', {
+    baudRate: 57600
+});
+
+port.on('data', function (data) {
+    console.log('Data: ' + data[0]);
 });
 
 Co(function*() {

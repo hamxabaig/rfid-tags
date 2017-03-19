@@ -4,6 +4,8 @@
 'use strict';
 const DEBUG     = require('debug')('api');
 const ModelAPI  = require('../models/api');
+const Person = require('../models/Persons');
+const SoldierFinger = require('../models/SoldierFinger');
 const Axios     = require('axios');
 const Co    = require('co');
 const Boom          = require('boom');
@@ -16,48 +18,76 @@ const helperAuth                = require('../helpers/auth');
          reply( request.pre.authInfo );
     },
 
-    github : function (request, reply) {
-        const userID = request.params.userID;
-        const userRole = helperAuth.getUserRole(request);
-
-        Co( function* () {
-            const resp = yield Axios.get(`http://api.github.com/users/${userID}/repos`);
-
-            let data = {};
-            if(resp.data) {
-                data = resp.data;
-            }
-
-            reply(data);
-
-        }).catch(function(err){
-            request.log('failed fetching github :',err.stack);
-            reply(Boom.badData(err.message));
-
-        });
-
-    }
+    addPersons : function (request, reply) {
+        const person = request.payload;
+        Person.create(person).then(function (person) {
+            return reply(person);
+        })
+        .catch(function () {
+            return reply(Boom.internal('WRITE_ERR'));
+        })
+    },
+     removePerson: function (request, reply) {
+         const personID = request.params.personID;
+         Person.remove({_id: personID}).then(function () {
+             return reply({result: 'success'});
+         })
+         .catch(function () {
+             return reply(Boom.internal('WRITE_ERR'));
+         })
+     },
+     updatePerson: function (request, reply) {
+         const personID = request.params.personID;
+         const person = request.payload;
+         Person.findByIdAndUpdate(personID, { $set: person }).then(function () {
+             return reply({result: 'success'});
+         })
+         .catch(function () {
+             return reply(Boom.internal('WRITE_ERR'));
+         })
+     },
+     getPersons: function (request, reply) {
+         Person.find().then(function (persons) {
+             return reply(persons);
+         })
+         .catch(function () {
+             return reply (Boom.internal('READ_ERR'));
+         })
+     },
+     addFinger: function (request, reply) {
+         const fingers = request.payload;
+         SoldierFinger.create(fingers).then(function (finger) {
+             return reply(finger);
+         })
+         .catch(function () {
+             return reply(Boom.internal('WRITE_ERR'));
+         })
+     },
+     removeFinger: function (request, reply) {
+         const fingerID = request.params.fingerID;
+         SoldierFinger.remove({finger_id: fingerID}).then(function () {
+             return reply({result: 'success'});
+         })
+         .catch(function () {
+             return reply(Boom.internal('WRITE_ERR'));
+         })
+     },
+     getFingers: function (request, reply) {
+         SoldierFinger.find().then(function (fingers) {
+             return reply(fingers);
+         })
+             .catch(function () {
+                 return reply(Boom.internal('READ_ERR'));
+             });
+     },
+     putFingers: function (request, reply) {
+         SoldierFinger.findByIdAndUpdate(request.params.fingerID, { $set: request.payload }).then(function () {
+             return reply({result: 'success'});
+         })
+         .catch(function (e) {
+             console.log('============',e);
+             return reply(Boom.internal('READ_ERR'));
+         });
+     }
 
 };
-
-//class ControllerAPI {
-//
-//    list(request,reply) {
-//
-//        const id = request.params.id;
-//        const page = request.query.page;
-//        request.log('api params.id :',id);
-//
-//        reply( { name : ['api1','api2','api3'], id, page } );
-//    }
-//    root(request,reply) {
-//
-//        reply.view('index', { title: 'UzysHapiSkeleton' });
-//    }
-//    auth(request,reply) {
-//
-//        reply.view('authentication', { title: 'UzysHapiSkeleton Basic authentication' });
-//    }
-//}
-//
-//exports = module.exports = new ControllerAPI();

@@ -11,14 +11,98 @@ module.exports = function () {
     return [
         {
             method: 'GET',
-            path: '/api/github/user/{userID}',
+            path: '/api/persons',
             config : {
                 description: 'ABTestConfig channels',
-                notes: 'API Fetch Channels by service_id',
+                notes: 'get Persons',
                 tags :['api'],
                 auth : false,
-                handler: ApiController.github,
-                validate : ApiValidate.github
+                handler: ApiController.getPersons,
+                validate : ApiValidate.validateGetPersons
+            }
+        },
+        {
+            method: 'POST',
+            path: '/api/persons',
+            config : {
+                description: 'ABTestConfig channels',
+                notes: 'Add Persons',
+                tags :['api'],
+                auth : false,
+                handler: ApiController.addPersons,
+                validate : ApiValidate.validatePersons
+            }
+        },
+        {
+            method: 'DELETE',
+            path: '/api/persons/{personID}',
+            config : {
+                description: 'ABTestConfig channels',
+                notes: 'delete Persons',
+                tags :['api'],
+                auth : false,
+                handler: ApiController.removePerson,
+                validate : ApiValidate.validateRemovePerson
+            }
+        },
+        {
+            method: 'PUT',
+            path: '/api/persons/{personID}',
+            config : {
+                description: 'ABTestConfig channels',
+                notes: 'Update Persons',
+                tags :['api'],
+                auth : false,
+                handler: ApiController.updatePerson,
+                validate : ApiValidate.validateUpdatePerson
+            }
+        },
+        {
+            method: 'POST',
+            path: '/api/fingers',
+            config : {
+                description: 'ABTestConfig channels',
+                notes: 'add fingers soldiers',
+                tags :['api'],
+                auth : false,
+                handler: ApiController.addFinger,
+                validate : ApiValidate.validateAddFingers
+            }
+        },
+        {
+            method: 'DELETE',
+            path: '/api/fingers/{fingerID}',
+            config : {
+                description: 'ABTestConfig channels',
+                notes: 'add fingers soldiers',
+                tags :['api'],
+                auth : false,
+                handler: ApiController.removeFinger,
+                validate : ApiValidate.validateRemoveFinger
+            }
+        },
+        {
+            method: 'GET',
+            path: '/api/fingers',
+            config : {
+                description: 'ABTestConfig channels',
+                notes: 'get fingers soldiers',
+                tags :['api'],
+                auth : false,
+                handler: ApiController.getFingers,
+                validate : ApiValidate.validateGetFingers
+            }
+        },
+        {
+            method: 'PUT',
+            path: '/api/fingers/{fingerID}',
+            config : {
+                description: 'ABTestConfig channels',
+                notes: 'put fingers soldiers',
+                tags :['api'],
+                auth : false,
+                handler: ApiController.putFingers,
+                validate : ApiValidate.validatePutFingers
             }
         },
          {
