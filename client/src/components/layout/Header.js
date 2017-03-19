@@ -95,7 +95,7 @@ class Header extends Component {
             <Navbar inverse fluid={true} style={navbarStyle}>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href='#' onClick={(e) =>{ e.preventDefault(); browserHistory.push('/')} } >{Pkg.name}</a>
+                        <a href='#' onClick={(e) =>{ e.preventDefault(); browserHistory.push('/')} } >WMDs</a>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>

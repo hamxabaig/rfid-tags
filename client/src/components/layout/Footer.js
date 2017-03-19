@@ -17,15 +17,14 @@ const Footer = function() {
     return (
         <footer style={style}>
             <div className="pull-right hidden-xs">
-                <b>Version</b> {Pkg.version}
+                <b>Version</b> 1.0B
             </div>
             <strong>
-                <span>Copyright &copy; 2016 </span>
-                <a href="https://github.com/uzysjung">Uzysjung</a>.
-            </strong> All rights reserved.
+                <span>Copyright &copy; 2017 </span>
+                    Something to write here
+            </strong>
         </footer>
     );
 };
 
 export default Radium(Footer);
-

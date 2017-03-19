@@ -15,6 +15,7 @@ import GithubPage from './containers/pages/GithubPage'
 import LoginPage from './containers/pages/LoginPage'
 import SignupPage from './containers/pages/SignupPage.js'
 import SamplePage from './containers/pages/SamplePage.js'
+import form from './containers/pages/form.js';
 
 
 const UserIsAuthenticated = UserAuthWrapper({
@@ -40,10 +41,12 @@ export default function (props = {}) {
 
     return (
         <Router history={history}>
+
             <Route path='/' component={Layout}>
                 <IndexRoute component={HomePage} />
                 <Route path='/github' component={UserIsAuthenticated(GithubPage)} />
                 <Route path='/sample/:id' component={UserIsAuthenticated(SamplePage)} />
+                <Route path='/addPersonnel' component={form} />
             </Route>
             <Route path='/login' component={LoginPage} />
             <Route path='/signup' component={SignupPage} />

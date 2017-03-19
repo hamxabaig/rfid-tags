@@ -12,18 +12,18 @@ export default function HomePage() {
     return (
         <PageWrapper>
             <PageHeader
-                title="Home"
-                description="UzysHapiReactBoilerplate"
+                title="Weapon Management Depo System "
+                description="(WMDs)"
             >
             </PageHeader>
             <PageContent>
                 <Box
-                    title="Welcome"
+                    title="Welcome to WMDs"
                     status="primary"
                     expandable
                     removable
                 >
-                    UzysHapiReactBoilerplate Version {Pkg.version}
+                    TODO add something here
                 </Box>
 
 
