@@ -2,8 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import PageWrapper from '../../components/page/PageWrapper';
 import { FormGroup , InputGroup, FormControl, Button, Grid , Row, Col, ListGroup, ListGroupItem} from 'react-bootstrap'
-
+import superagent from 'superagent';
 export default class Test extends React.Component{
+    componentDidMount(){
+    }
 constructor(props) {
   super(props);
 }
@@ -11,10 +13,10 @@ constructor(props) {
         return (
 
 
-                <form>
+                <form refs={(e) =>this.form =e}>
                     <FormGroup>
                         <label>Name</label>
-                        <FormControl Type="text" placeholder="Enter Person Name" inputRef={(e) => this.name = e}></FormControl>
+                        <FormControl name="name" Type="text" placeholder="Enter Person Name" inputRef={(e) => this.name = e}></FormControl>
                     </FormGroup>
                     <FormGroup>
                         <label>Army Number</label>
@@ -66,18 +68,42 @@ constructor(props) {
     }
     handleSubmit = (event) => {
         event.preventDefault();
-        const _name = (this.name).value.trim();
-        /*const  _armyNumber= (this.refs.armyNumber).value.trim();
-        const _dob = (this.refs.dob).value.trim();
-        const _currentUnit = (this.refs.currentUnit).value.trim();
-        const _rank =(this.refs.rank).value.trim();
-        const _batch =(this.refs.batchNo).value.trim();
-        const _medCat = (this.refs.medCat).value.trim();
-        const _trade =(this.refs.trade).value.trim();
-        const _milCourses = (this.refs.courses).value.trim();
-        const _children = (this.refs.children).value.trim();
-        const _parents =(this.refs.parents).value.trim();*/
-        console.log(_name);
-        //console.log(_armyNumber);
+        const name = (this.name).value.trim();
+        const  army_number= (this.armyNumber).value.trim();
+        const dob = (this.dob).value.trim();
+        const current_unit = (this.currentUnit).value.trim();
+        const rank =(this.rank).value.trim();
+        const batch_no =(this.batchNo).value.trim();
+        const med_cat = (this.medCat).value.trim();
+        const trade =(this.trade).value.trim();
+        const mil_courses = [(this.courses).value.trim()];
+        const children = [(this.children).value.trim()];
+        const parents =[(this.parents).value.trim()];
+        this.refs.form.reset();
+
+        /*superagent.post("/api/persons").send({
+            name,
+            army_number,
+            dob,
+            current_unit,
+            rank,
+            batch_no,
+            med_cat,
+            trade,
+            mil_courses,
+            children,
+            parents
+        }).end(function(error,result){
+            if(!error){
+                console.log("Inserted");
+                console.log(result);
+                //Todo state Update Successfull
+                //todo empty form
+                ReactDOM.findDOMNode(this.name).value = '';
+
+            }else{
+                console.log("An error occured");
+            }
+        });*/
     }
 }
