@@ -3,17 +3,24 @@ import ReactDOM from 'react-dom';
 import PageWrapper from '../../components/page/PageWrapper';
 import { FormGroup , InputGroup, FormControl, Button, Grid , Row, Col, ListGroup, ListGroupItem} from 'react-bootstrap'
 import superagent from 'superagent';
+var NotificationSystem = require('react-notification-system');
 export default class Test extends React.Component{
     componentDidMount(){
     }
 constructor(props) {
   super(props);
 }
+componentDidMount(){
+    this.notification.addNotification({
+        message:'some message',
+        level:'success'
+    });
+}
     render(){
         return (
 
-
-                <form refs={(e) =>this.form =e}>
+                <form ref={(e) =>this.form =e}>
+                    <NotificationSystem ref="notificationSystem" />
                     <FormGroup>
                         <label>Name</label>
                         <FormControl name="name" Type="text" placeholder="Enter Person Name" inputRef={(e) => this.name = e}></FormControl>
@@ -67,6 +74,10 @@ constructor(props) {
 
     }
     handleSubmit = (event) => {
+        this._notificationSystem.addNotification({
+          message: 'Notification message',
+          level: 'success'
+        });
         event.preventDefault();
         const name = (this.name).value.trim();
         const  army_number= (this.armyNumber).value.trim();
@@ -79,7 +90,8 @@ constructor(props) {
         const mil_courses = [(this.courses).value.trim()];
         const children = [(this.children).value.trim()];
         const parents =[(this.parents).value.trim()];
-        this.refs.form.reset();
+        this.form.reset();
+
 
         /*superagent.post("/api/persons").send({
             name,
