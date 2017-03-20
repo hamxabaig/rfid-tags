@@ -70,10 +70,7 @@ componentDidMount(){
 
     }
     handleSubmit = (event) => {
-        this.refs.notificationSystem.addNotification({
-          message: 'Notification message',
-          level: 'success'
-        });
+
         event.preventDefault();
         const name = (this.name).value.trim();
         const  army_number= (this.armyNumber).value.trim();
@@ -89,7 +86,7 @@ componentDidMount(){
         this.form.reset();
 
 
-        /*superagent.post("/api/persons").send({
+        superagent.post("/api/persons").send({
             name,
             army_number,
             dob,
@@ -112,6 +109,10 @@ componentDidMount(){
             }else{
                 console.log("An error occured");
             }
-        });*/
+        });
+        this.refs.notificationSystem.addNotification({
+          message: 'successully added',
+          level: 'success'
+        });
     }
 }
