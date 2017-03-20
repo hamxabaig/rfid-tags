@@ -20,20 +20,23 @@ setTimeout(function () {
     socket.on('connection', function() {
         console.log('a user connected');
     });
-    console.log('here')
+    console.log('Connected with Server');
 
     socket.on('broadcast', function (data) {
-        console.log(data);
-        alert(data)
-    })
+        console.log(data); // contains RFID and FINGER ID
+        const issueWeapon = prompt(data);
+        if (issueWeapon === 'yes') {
+            // send request to /api/fingers POST with data finger_id and name
+            socket.emit('issueWeapon', 'YES');
+        }
+    });
     socket.on('disconnect', function(){
         console.log('user disconnected');
     });
     socket.on('connect_error', function (e) {
         console.log(e, 'err')
-    })
-    console.log('ok')
-}, 1000)
+    });
+}, 1000);
 
 
 export default function App() {

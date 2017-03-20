@@ -32,7 +32,7 @@ console.log(io);
 
 io.on('connection', function (socket) {
     socket.emit('oh hello');
-   socket.on('reply', function () {
+   socket.on('issueWeapon', function () {
        port.write('YES');
    });
 });
