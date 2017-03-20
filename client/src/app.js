@@ -52,4 +52,3 @@ const propTypes = {
     // layout : PropTypes.component
 };
 App.propTypes = propTypes;
-
