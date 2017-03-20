@@ -1,8 +1,12 @@
-import React  from 'react';
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import PageWrapper from '../../components/page/PageWrapper';
 import { FormGroup , InputGroup, FormControl, Button, Grid , Row, Col, ListGroup, ListGroupItem} from 'react-bootstrap'
 
 export default class Test extends React.Component{
+constructor(props) {
+  super(props);
+}
     render(){
         return (
 
@@ -10,22 +14,70 @@ export default class Test extends React.Component{
                 <form>
                     <FormGroup>
                         <label>Name</label>
-                        <FormControl Type="text" placeholder="Enter Person Name" ref="name"></FormControl>
+                        <FormControl Type="text" placeholder="Enter Person Name" inputRef={(e) => this.name = e}></FormControl>
                     </FormGroup>
                     <FormGroup>
                         <label>Army Number</label>
-                        <FormControl Type="text" placeholder="Enter Person number" ref="number"></FormControl>
+                        <FormControl Type="number" placeholder="Enter Person number" inputRef={(e) => this.armyNumber = e}></FormControl>
                     </FormGroup>
                     <FormGroup>
                         <label>Date of Birth</label>
-                        <FormControl Type="text" placeholder="Enter Person dob" ref="dob"></FormControl>
+                        <FormControl Type="text" placeholder="Enter Person dob" inputRef={(e) => this.dob = e}></FormControl>
                     </FormGroup>
                     <FormGroup>
                         <label>Current Unit</label>
-                        <FormControl Type="text" placeholder="Enter Current Unit" ref="currentUnit"></FormControl>
+                        <FormControl Type="text" placeholder="Enter Current Unit" inputRef={(e) => this.currentUnit = e}></FormControl>
                     </FormGroup>
+                    <FormGroup>
+                        <label>Rank</label>
+                        <FormControl Type="text" placeholder="Enter Current Rank" inputRef={(e) => this.rank = e}></FormControl>
+                    </FormGroup>
+                    <FormGroup>
+                        <label>Batch no</label>
+                        <FormControl Type="number" placeholder="Enter Batch Number" inputRef={(e) => this.batchNo = e}></FormControl>
+                    </FormGroup>
+                    <FormGroup>
+                        <label>Medical Category</label>
+                        <FormControl Type="text" placeholder="Enter Medical Category" inputRef={(e) => this.medCat = e}></FormControl>
+                    </FormGroup>
+                    <FormGroup>
+                        <label>Trade </label>
+                        <FormControl Type="text" placeholder="Enter Trade" inputRef={(e) => this.trade = e}></FormControl>
+                    </FormGroup>
+                    <FormGroup>
+                        <label>Military Courses</label>
+                        <FormControl Type="text" placeholder="Enter Militarty courses" inputRef={(e) => this.courses = e}></FormControl>
+                    </FormGroup>
+                    <FormGroup>
+                        <label>Children</label>
+                        <FormControl Type="text" placeholder="Enter Children" inputRef={(e) => this.children = e}></FormControl>
+                    </FormGroup>
+                    <FormGroup>
+                        <label>Parents </label>
+                        <FormControl Type="text" placeholder="Enter Parents" inputRef={(e) => this.parents = e}></FormControl>
+                    </FormGroup>
+                    <InputGroup.Button>
+                        <Button id='submit' bsStyle="success" onClick={this.handleSubmit}>Add Person  </Button>
+                    </InputGroup.Button>
                 </form>
-        
+
         );
+
+    }
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const _name = (this.name).value.trim();
+        /*const  _armyNumber= (this.refs.armyNumber).value.trim();
+        const _dob = (this.refs.dob).value.trim();
+        const _currentUnit = (this.refs.currentUnit).value.trim();
+        const _rank =(this.refs.rank).value.trim();
+        const _batch =(this.refs.batchNo).value.trim();
+        const _medCat = (this.refs.medCat).value.trim();
+        const _trade =(this.refs.trade).value.trim();
+        const _milCourses = (this.refs.courses).value.trim();
+        const _children = (this.refs.children).value.trim();
+        const _parents =(this.refs.parents).value.trim();*/
+        console.log(_name);
+        //console.log(_armyNumber);
     }
 }

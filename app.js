@@ -18,13 +18,13 @@ mongoose.connect('mongodb://localhost/wms').then(function (err) {
     }
 });
 
-var port = new SerialPort('/dev/cu.usbmodem1421', {
+/*var port = new SerialPort('/dev/cu.usbmodem1421', {
     baudRate: 57600
 });
 
 port.on('data', function (data) {
     console.log('Data: ' + data[0]);
-});
+});*/
 
 Co(function*() {
 
@@ -86,4 +86,3 @@ process.on('SIGINT', () => {
 
 
 module.exports = exports = server;
-
