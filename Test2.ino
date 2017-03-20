@@ -58,11 +58,7 @@ void loop() {
   ch_fing = getFingerprintIDez();
   if (ch_fing == 1){
     //Serial.println("User Authenticated !");
-    Serial.print("RFID:");
-    dump_byte_array(mfrc522.uid.uidByte, mfrc522.uid.size);
-    //Serial.println("");
-    Serial.print("Finger ID:");
-    Serial.print(finger.fingerID);
+    Serial.print("{rfid:" + "\""+dump_byte_array(mfrc522.uid.uidByte, mfrc522.uid.size) + "\",finger_id:" + finger.fingerID +"}");
     tick = tock = millis();
     Ser = 0;
     Serial.flush();
