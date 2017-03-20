@@ -12,10 +12,29 @@ import 'font-awesome-webpack2'
 import Routes from './routes'
 import { authUser } from './actions/user.js';
 
-
+var socket = io();
 if(localStore.get('token')) {
     store.dispatch(authUser());
 }
+setTimeout(function () {
+    socket.on('connection', function() {
+        console.log('a user connected');
+    });
+    console.log('here')
+
+    socket.on('broadcast', function (data) {
+        console.log(data);
+        alert(data)
+    })
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });
+    socket.on('connect_error', function (e) {
+        console.log(e, 'err')
+    })
+    console.log('ok')
+}, 1000)
+
 
 export default function App() {
     return (
@@ -30,4 +49,3 @@ const propTypes = {
     // layout : PropTypes.component
 };
 App.propTypes = propTypes;
-
