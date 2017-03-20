@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PageWrapper from '../../components/page/PageWrapper';
 import { FormGroup , InputGroup, FormControl, Button, Grid , Row, Col, ListGroup, ListGroupItem} from 'react-bootstrap'
 import superagent from 'superagent';
-var NotificationSystem = require('react-notification-system');
+import NotificationSystem from 'react-notification-system';
 export default class Test extends React.Component{
     componentDidMount(){
     }
@@ -11,10 +11,6 @@ constructor(props) {
   super(props);
 }
 componentDidMount(){
-    this.notification.addNotification({
-        message:'some message',
-        level:'success'
-    });
 }
     render(){
         return (
@@ -74,7 +70,7 @@ componentDidMount(){
 
     }
     handleSubmit = (event) => {
-        this._notificationSystem.addNotification({
+        this.refs.notificationSystem.addNotification({
           message: 'Notification message',
           level: 'success'
         });
