@@ -9,13 +9,16 @@ export default class displayPeronnel extends Component{
         super(props);
         this.persons=[];
     }
+  state = {
+    persons: []
+  };
 
     componentDidMount(){
         alert("did Mount personnel");
-        superagent.get('/api/persons').end(function(err,res){
+        superagent.get('/api/persons').end((err,res) => {
             if(!err){
-                this.persons=res.body;
-                console.log(this.persons);
+              this.setState({persons: res.body});
+                console.log(res.body);
             }else{
                 console.log("an error occured");
             }
@@ -23,10 +26,10 @@ export default class displayPeronnel extends Component{
 
     }
     render(){
+      console.log(this.state.persons);
         return(
             <div>
                 <h1>Success</h1>
-                    {console.log(this.persons)}
                 </div>
 );
 
