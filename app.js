@@ -19,11 +19,10 @@ mongoose.connect('mongodb://localhost/wms').then(function (err) {
 });
 const io = require('socket.io')(server.listener);
 
-/*var port = new SerialPort('/dev/cu.usbmodem1421', {
-    baudRate: 57600
+var port = new serialport('/dev/cu.usbmodem1421', {
+    baudRate: 9600,
     parser: serialport.parsers.readline("\n")
 });
-console.log(io);
 
 io.on('connection', function (socket) {
     socket.emit('oh hello');
@@ -36,10 +35,10 @@ port.on('open', function () {
     console.log('opened');
 });
 port.on('data', function (data) {
-    console.log('Data: ' + data);
-    io.emit('broadcast', 'Please confirm to issue weapon');
+    console.log('Data:============================ ' + data);
+    io.emit('broadcast', JSON.parse(data.replace('RFID', '"RFID"').replace('FingerID:', '"FingerID":"').replace('}', '"}')));
 });
-*/
+
 Co(function*() {
 
     yield require('./server/plugins/hapi-pino')(server);

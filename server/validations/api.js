@@ -57,7 +57,7 @@ module.exports = {
     },
     validateAddFingers: {
         payload: {
-            name: Joi.string().required(),
+            rfid: Joi.string().required(),
             finger_id: Joi.number().required()
         }
     },
@@ -68,6 +68,7 @@ module.exports = {
           fingerID: Joi.string().required()
         },
         payload: {
+            rfid: Joi.string(),
             name: Joi.string(),
             finger_id: Joi.number()
         }
