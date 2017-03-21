@@ -4,14 +4,9 @@
  */
 import React, { PropTypes,Component } from 'react';
 import Box from '../../components/widget/Box'
-import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { routerActions } from 'react-router-redux'
-import { signinUser , failedUserData } from '../../actions/user'
-
-import { Grid , Panel, Jumbotron, Form , FormGroup, Col, Button, FormControl, Checkbox, ControlLabel , PageHeader, Alert } from 'react-bootstrap'
-import Radium from 'radium'
-import Pkg from '../../../../package.json'
+import { Link, browserHistory } from 'react-router'
+import superagent from 'superagent';
+import { Form , FormGroup, Col, Button, FormControl, Checkbox, ControlLabel , PageHeader, Alert } from 'react-bootstrap'
 
 const styleLogin = {
 
@@ -48,45 +43,37 @@ class LoginPage extends React.Component {
     componentDidMount() {
     }
 
-    componentWillUnmount() {
-        this.props.failedUserData(null);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        // console.log('nextProps',nextProps);
-        const { authenticated, replace, redirect } = nextProps;
-        const { authenticated: wasAuthenticated } = this.props;
-
-        if (!wasAuthenticated && authenticated) {
-            replace(redirect)
-        }
-    }
-
     handleFormSubmit = (e) => {
         e.preventDefault();
         const { email, password } = this.state;
+        setTimeout(() => this.setState({error: false}), 3000);
 
         if ( !email || email.length < 1) {
-            this.props.failedUserData('Insert Email address');
+            this.setState({error: 'Insert Email address'});
             return;
         }
 
         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-            this.props.failedUserData('Please check whether this email is valid');
-            return
+            this.setState({error: 'Please check whether this email is valid'});
+            return;
         }
         if (!password) {
-            this.props.failedUserData('Insert Password');
+            this.setState({error: 'Insert Password'});
             return;
         }
-        if ( password && password.length < 8 ) {
-            this.props.failedUserData('Password must be longer than 8 charaters');
+        if ( password && password.length < 5 ) {
+            this.setState({error: 'Password must be longer than 5 characters'});
             return;
         }
 
-
-        this.props.signinUser({ email, password });
-
+        superagent.post('/api/login').send({login_email: email, login_pw: password}).end((err, result) => {
+            if (!err) {
+                localStorage.setItem('jwt', result.body.token);
+                browserHistory.push('/');
+            } else {
+                this.setState({error: 'Login email/password incorrect :('});
+            }
+        });
     };
     handleForChange = (e) => {
         console.log('e.target.id',e.target.id);
@@ -101,10 +88,10 @@ class LoginPage extends React.Component {
     };
 
     renderAlert() {
-        if (this.props.errorMessage) {
+        if (this.state.error) {
             return (
                 <Alert bsStyle="danger">
-                    {this.props.errorMessage}
+                    {this.state.error}
                 </Alert>
             )
         }
@@ -113,14 +100,12 @@ class LoginPage extends React.Component {
     render() {
         return (
                 <div style={styleLogin.panel}>
-                    <PageHeader style={styleLogin.header}>UzysReactBoilerplate <small>{Pkg.version}</small></PageHeader>
+                    <PageHeader style={styleLogin.header}>WDMs</PageHeader>
                     <Box
                         title="Login"
                         status="info"
                         solid
                         >
-
-
                         <Form onSubmit={this.handleFormSubmit} horizontal>
                             <FormGroup controlId="formHorizontalEmail">
                                 <Col componentClass={ControlLabel} sm={2}>
@@ -154,7 +139,6 @@ class LoginPage extends React.Component {
                                 </Col>
                             </FormGroup>
                         </Form>
-                        <div style={{marginLeft : 10 , marginTop : 20}}><Link to={`/signUp`}>Register a new membership</Link> </div>
                     </Box>
 
 
@@ -165,24 +149,6 @@ class LoginPage extends React.Component {
 
 }
 
-LoginPage.propTypes = {
-    authenticated: PropTypes.bool.isRequired,
-    replace: PropTypes.func.isRequired,
-    errorMessage : PropTypes.string
-};
-
-
-function mapStateToProps(state, ownProps) {
-
-    const redirect = ownProps.location.query.redirect || '/';
-    return {
-        authenticated : state.auth.authenticated,
-        redirect : redirect,
-        errorMessage: state.auth.error
-    };
-
-}
-
-export default connect(mapStateToProps, { replace: routerActions.replace , signinUser , failedUserData } )(Radium(LoginPage));
+export default LoginPage;
 
 

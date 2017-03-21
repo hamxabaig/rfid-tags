@@ -15,7 +15,7 @@ export default class displayPeronnel extends Component{
   };
 
     componentDidMount(){
-        superagent.get('/api/persons').end((err,res) => {
+        superagent.get('/api/persons').set('Authorization', localStorage.getItem('jwt')).end((err,res) => {
             if(!err){
               this.setState({persons: res.body});
                 console.log(res.body);
@@ -124,7 +124,7 @@ export default class displayPeronnel extends Component{
         this.setState({currentPerson:{}});
     }
     deletePerson(id, index){
-        superagent.delete(`/api/persons/${id}`).end((err,res)=>{
+        superagent.delete(`/api/persons/${id}`).set('Authorization', localStorage.getItem('jwt')).end((err,res)=>{
             if(!err){
                 this.state.persons.splice(index, 1);
                 this.setState({persons: this.state.persons});
@@ -142,7 +142,7 @@ export default class displayPeronnel extends Component{
         this.setState({currentPerson: person});
     }
     getPersons (){
-        superagent.get('/api/persons').end(function(err,res){
+        superagent.get('/api/persons').set('Authorization', localStorage.getItem('jwt')).end(function(err,res){
             if(!err){
                 const persons= res.body;
                 return persons;

@@ -6,9 +6,8 @@ import React ,{ Component, PropTypes }from 'react';
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 import Radium from 'radium'
-import { browserHistory } from 'react-router'
 import { signoutUser } from '../../actions/user.js'
 const menuItem = [
     {
@@ -145,6 +144,9 @@ class Layout extends React.Component {
 
     }
     componentWillMount() {
+        if (!localStorage.getItem('jwt')) {
+            return browserHistory.push('/login');
+        }
         const curMenuKey = this.setselectedMenuKey(this.props.location.pathname);
 
         this.setState({
