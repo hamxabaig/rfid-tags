@@ -4,7 +4,7 @@
 
 import React ,{ Component, PropTypes }from 'react'
 import { Provider } from 'react-redux'
-
+import NotificationSystem from 'react-notification-system';
 import { store , history } from './store'
 import localStore from '../../node_modules/store/store.js'
 import 'font-awesome-webpack2'
@@ -41,6 +41,7 @@ setTimeout(function () {
 
 export default function App() {
     return (
+
         <Provider store={store}>
             <Routes history={history} />
         </Provider>

@@ -19,7 +19,6 @@ mongoose.connect('mongodb://localhost/wms').then(function (err) {
 });
 const io = require('socket.io')(server.listener);
 
-<<<<<<< HEAD
 /*var port = new SerialPort('/dev/cu.usbmodem1421', {
     baudRate: 57600
 =======
@@ -44,12 +43,6 @@ port.on('data', function (data) {
 <<<<<<< HEAD
     console.log('Data: ' + data[0]);
 });*/
-=======
-    console.log('Data: ' + data);
-    io.emit('broadcast', 'Please confirm to issue weapon');
-});
->>>>>>> 3efdbb9ea11b6e867bb4ccb7cd956c1589af045a
-
 Co(function*() {
 
     yield require('./server/plugins/hapi-pino')(server);
