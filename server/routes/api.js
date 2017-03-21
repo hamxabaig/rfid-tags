@@ -16,7 +16,7 @@ module.exports = function () {
                 description: 'ABTestConfig channels',
                 notes: 'get Persons',
                 tags :['api'],
-                auth : false,
+                auth : 'jwt',
                 handler: ApiController.getPersons,
                 validate : ApiValidate.validateGetPersons
             }
@@ -28,7 +28,7 @@ module.exports = function () {
                 description: 'ABTestConfig channels',
                 notes: 'Add Persons',
                 tags :['api'],
-                auth : false,
+                auth : 'jwt',
                 handler: ApiController.addPersons,
                 validate : ApiValidate.validatePersons
             }
@@ -40,7 +40,7 @@ module.exports = function () {
                 description: 'ABTestConfig channels',
                 notes: 'delete Persons',
                 tags :['api'],
-                auth : false,
+                auth : 'jwt',
                 handler: ApiController.removePerson,
                 validate : ApiValidate.validateRemovePerson
             }
@@ -52,7 +52,7 @@ module.exports = function () {
                 description: 'ABTestConfig channels',
                 notes: 'Update Persons',
                 tags :['api'],
-                auth : false,
+                auth : 'jwt',
                 handler: ApiController.updatePerson,
                 validate : ApiValidate.validateUpdatePerson
             }
@@ -64,7 +64,7 @@ module.exports = function () {
                 description: 'ABTestConfig channels',
                 notes: 'add fingers soldiers',
                 tags :['api'],
-                auth : false,
+                auth : 'jwt',
                 handler: ApiController.addFinger,
                 validate : ApiValidate.validateAddFingers
             }
@@ -76,7 +76,7 @@ module.exports = function () {
                 description: 'ABTestConfig channels',
                 notes: 'add fingers soldiers',
                 tags :['api'],
-                auth : false,
+                auth : 'jwt',
                 handler: ApiController.removeFinger,
                 validate : ApiValidate.validateRemoveFinger
             }
@@ -88,7 +88,7 @@ module.exports = function () {
                 description: 'ABTestConfig channels',
                 notes: 'get fingers soldiers',
                 tags :['api'],
-                auth : false,
+                auth : 'jwt',
                 handler: ApiController.getFingers,
                 validate : ApiValidate.validateGetFingers
             }
@@ -100,22 +100,10 @@ module.exports = function () {
                 description: 'ABTestConfig channels',
                 notes: 'put fingers soldiers',
                 tags :['api'],
-                auth : false,
+                auth : 'jwt',
                 handler: ApiController.putFingers,
                 validate : ApiValidate.validatePutFingers
             }
-        },
-         {
-             method: 'GET',
-             path: '/api/authInfo',
-             config : {
-                 description: 'api Authorization Information',
-                 notes: 'Role , Email ',
-                 tags :['api'], //you must put in 'api' in order to use Swagger-UI.
-                 pre : [{ method:middleware.authUserInfo , assign: 'authInfo' }],
-                 handler: ApiController.authInfo,
-                 validate: ApiValidate.authInfo
-             }
-         },
+        }
     ];
 }();

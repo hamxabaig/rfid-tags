@@ -21,11 +21,7 @@ const io = require('socket.io')(server.listener);
 
 /*var port = new SerialPort('/dev/cu.usbmodem1421', {
     baudRate: 57600
-=======
-var port = new serialport('/dev/cu.usbmodem1421', {
-    baudRate: 9600,
     parser: serialport.parsers.readline("\n")
->>>>>>> 3efdbb9ea11b6e867bb4ccb7cd956c1589af045a
 });
 console.log(io);
 
@@ -41,14 +37,20 @@ port.on('open', function () {
 });
 port.on('data', function (data) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     console.log('Data: ' + data[0]);
 });*/
+=======
+    console.log('Data: ' + data);
+    io.emit('broadcast', 'Please confirm to issue weapon');
+});
+*/
+>>>>>>> 0949eec1dccd87ddc2d60d173824c25093c70b38
 Co(function*() {
 
     yield require('./server/plugins/hapi-pino')(server);
     yield [require('./server/plugins/inert')(server), require('./server/plugins/vision')(server)];
     yield require('./server/plugins/scooter')(server);
-    yield require('./server/plugins/hapi-auth-basic')(server);
     yield require('./server/plugins/hapi-swagger')(server);
     yield require('./server/plugins/auth-jwt2')(server);
 

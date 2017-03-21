@@ -7,12 +7,11 @@ const Co                = require('co');
 const modelUser     = require('../models/user');
 const _                 = require('lodash');
 
-
 const internals = {};
 
 // assign authUserInfo
-internals.authUserInfo = function (request,reply) {
-
+internals.authUserInfo = function (request, reply) {
+    console.log('----------------------------------sfd');
     const userID = _.get(request.auth.credentials,'id');
     Co(function*(){
 

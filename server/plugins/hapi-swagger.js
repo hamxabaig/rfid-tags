@@ -13,7 +13,6 @@ const swaggerConfig = {
             description : require('../../package').description,
             version : require('../../package').version
         },
-        auth: 'simple',
         jsonEditor : true
 
     }
