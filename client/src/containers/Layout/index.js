@@ -157,7 +157,7 @@ class Layout extends React.Component {
 
     }
     componentDidMount() {
-        console.log('didMount')
+        
     }
 
 

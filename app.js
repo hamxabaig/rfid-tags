@@ -36,10 +36,16 @@ port.on('open', function () {
     console.log('opened');
 });
 port.on('data', function (data) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+    console.log('Data: ' + data[0]);
+});*/
+=======
     console.log('Data: ' + data);
     io.emit('broadcast', 'Please confirm to issue weapon');
 });
 */
+>>>>>>> 0949eec1dccd87ddc2d60d173824c25093c70b38
 Co(function*() {
 
     yield require('./server/plugins/hapi-pino')(server);

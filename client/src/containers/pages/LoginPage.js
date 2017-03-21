@@ -100,7 +100,7 @@ class LoginPage extends React.Component {
     render() {
         return (
                 <div style={styleLogin.panel}>
-                    <PageHeader style={styleLogin.header}>WDMs</PageHeader>
+                    <PageHeader style={styleLogin.header}>Weapon Management System</PageHeader>
                     <Box
                         title="Login"
                         status="info"
@@ -133,7 +133,7 @@ class LoginPage extends React.Component {
                             {this.renderAlert()}
                             <FormGroup>
                                 <Col smOffset={2} sm={10}>
-                                    <Button type="submit">
+                                    <Button className="btn btn-success" type="submit">
                                         Sign in
                                     </Button>
                                 </Col>
@@ -150,5 +150,3 @@ class LoginPage extends React.Component {
 }
 
 export default LoginPage;
-
-
