@@ -13,32 +13,32 @@ import { signoutUser } from '../../actions/user.js'
 const menuItem = [
     {
         key : 1,
-        title : 'Home',
-        url : '/',
+        title : 'View Personnel',
+        url : '/displayPersonnel',
         subMenu : null
     },
     {
         key : 2,
-        title : 'Github',
-        url : '/github',
+        title : 'Add Personnel',
+        url : '/addPersonnel',
         subMenu : null
     },
     {
         key : 3,
-        title : 'MenuSample',
+        title : 'Weapon Issue',
         subMenu : [
             {
                 key :3.1,
-                title : 'sample1',
-                url : `/sample/1?query=hi`
+                title : 'Add Finger Print',
+                url : `/addFingerprint`
             },
             {
                 seperator : true
             },
             {
                 key :3.2,
-                title : 'sample2',
-                url : '/sample/2?query=hello'
+                title : 'View Finger Prints',
+                url : '/viewFingerprints'
             }
 
         ]
@@ -186,5 +186,3 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default connect(mapStateToProps, { signoutUser })(Radium(Layout));
-
-
