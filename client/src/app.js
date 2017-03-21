@@ -11,6 +11,7 @@ import 'font-awesome-webpack2'
 // import '../../node_modules/bootstrap/dist/js/bootstrap'
 import Routes from './routes'
 import { authUser } from './actions/user.js';
+import superagent from 'superagent';
 
 var socket = io();
 if(localStore.get('token')) {
@@ -26,6 +27,7 @@ setTimeout(function () {
         console.log(data); // contains RFID and FINGER ID
         const issueWeapon = prompt(data);
         if (issueWeapon === 'yes') {
+            superagent.post('/api/fingers').send({finger_id: data.FingerID})
             // send request to /api/fingers POST with data finger_id and name
             socket.emit('issueWeapon', 'YES');
         }
