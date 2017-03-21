@@ -10,67 +10,20 @@ export default class FingersPage extends Component{
         this.fingers = [];
     }
     state = {
-        fingers: []
+
     };
 
     componentDidMount(){
-        superagent.get('/api/fingers').set('Authorization', localStorage.getItem('jwt')).end((err,res) => {
-            if(!err){
-                this.setState({fingers: res.body});
-                console.log(res.body);
-            }else{
-                console.log("an error occured");
-            }
-        });
 
     }
     render(){
-        //console.log(this.state.persons);
         return(
 
-            // <ul>{
-            //     this.state.persons.map((person)=>{
-            //         console.log("Does it come here??")
-            //         return(
-            //         <li> <strong> {person.army_number}</strong> : {person.name} </li>)
-            //     })
-            // }
-            // </ul>
             <div className="row">
                 <div className={`col-lg-12 table-responsive col-lg-offset-1`}>
-                    <table className="table">
-                        <thead>
-                        <tr >
-                            <th>Finger ID</th>
-                            <th>Name</th>
-                            <th>Gun ID</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
+                    <div>
 
-                        {
-                            this.state.fingers.map((finger, key)=>{
-                                return(
-                                    <tr key={finger._id}>
-                                        <th scope="row">{finger.finger_id}</th>
-                                        <td>
-                                            {
-                                                !finger.name &&
-                                                    <div>
-                                                        <input type="text" ref={(e) => this.fingers[key] = e} />
-                                                        <button onClick={() => this.saveName(key)}>submit</button>
-                                                    </div>
-                                            }
-                                            {finger.name}
-                                        </td>
-                                        <td>{finger.rfid}</td>
-                                        <td><button className='btn btn-danger' onClick={()=>this.deleteFinger(finger.finger_id, key)}>Delete Finger</button></td>
-                                    </tr>
-
-                                )
-                            })
-                        }
-                    </table>
+                    </div>
                 </div>
             </div>
         );

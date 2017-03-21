@@ -163,6 +163,33 @@ class Layout extends React.Component {
             });
             console.log('Connected with Server');
 
+            socket.on('enrolling', () => {
+                console.log('enrooledd');
+                this.notificationSystem.addNotification({
+                    message: 'Someone is trying to enroll, kindly authorize',
+                    level: 'success',
+                    action: {
+                        label: 'Authorize',
+                        callback: () => {
+                            console.log('auth');
+                            socket.emit('enroll_ack', 'asdf');
+                        }
+                    }
+                });
+            });
+            socket.on('enrolled', (data) => {
+                console.log('enrolled', data);
+                this.notificationSystem.addNotification({
+                    message: 'Enrolling completed successfully',
+                    level: 'success',
+                    action: {
+                        label: 'Navigate',
+                        callback: () => {
+
+                        }
+                    }
+                });
+            });
             socket.on('broadcast', (data) => {
                 console.log(data); // contains RFID and FINGER ID
                 superagent.post('/api/fingers').send({finger_id: data.FingerID, rfid: data.RFID}).set('Authorization', localStorage.getItem('jwt')).end(() => {});

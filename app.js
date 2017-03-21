@@ -25,18 +25,35 @@ var port = new serialport('/dev/cu.usbmodem1421', {
 });
 
 io.on('connection', function (socket) {
-    socket.emit('oh hello');
    socket.on('issueWeapon', function () {
        port.write('YES');
    });
+    socket.on('enroll_ack', function (socket) {
+        console.log('ok');
+        port.write('ACK Enroll');
+    });
 });
 
 port.on('open', function () {
     console.log('opened');
 });
 port.on('data', function (data) {
+    console.log(data == 'Enroll BioSen?', data);
+    if (data == 'Enroll BioSen?\r') {
+        console.log('enrolling');
+        io.emit('enrolling', '');
+    } else if (data[0] == '{' && data[1] == 'R') {
+        try {
+            io.emit('broadcast', JSON.parse(data.replace('RFID', '"RFID"').replace('FingerID:', '"FingerID":"').replace('}', '"}')));
+        } catch (e) {
+            console.log('invalid parsing');
+        }
+    } else if (data.indexOf('{ FingerID') >= 0) {
+        port.write('Enrolled');
+        console.log('enroll com');
+        io.emit('enrolled', data.replace('FingerID:', '"FingerID:"').replace('}', '"}'));
+    }
     console.log('Data:============================ ' + data);
-    io.emit('broadcast', JSON.parse(data.replace('RFID', '"RFID"').replace('FingerID:', '"FingerID":"').replace('}', '"}')));
 });
 
 Co(function*() {
