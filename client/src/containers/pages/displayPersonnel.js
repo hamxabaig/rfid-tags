@@ -114,7 +114,6 @@ export default class displayPeronnel extends Component{
                             </li>
                         </ul>
                     </div>
-
                 }
                 </div>
 );
