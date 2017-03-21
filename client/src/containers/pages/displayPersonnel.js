@@ -41,7 +41,7 @@ export default class displayPeronnel extends Component{
                 // }
                 // </ul>
                 <div className="row">
-                    <div className={`${isShow ? 'col-lg-8' : 'col-lg-12'} table-responsive col-lg-offset-1`}>
+                    <div className={`${isShow ? 'col-lg-7' : 'col-lg-12'} table-responsive col-lg-offset-1`}>
                         <table className="table">
                             <thead>
                                 <tr >
@@ -114,8 +114,8 @@ export default class displayPeronnel extends Component{
                             </li>
                         </ul>
                     </div>
-                }
 
+                }
                 </div>
 );
 
