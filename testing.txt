@@ -1,0 +1,8 @@
+super agent /persons get 
+.end(function(result){})
+result.body.map(function (person){
+	return <div>
+		<h1>{{person.name}}</h1>
+		</div>
+
+})

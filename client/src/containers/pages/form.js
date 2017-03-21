@@ -86,7 +86,7 @@ componentDidMount(){
         this.form.reset();
 
 
-        superagent.post("/api/persons").send({
+        superagent.post("/api/persons").set('Authorization', localStorage.getItem('jwt')).send({
             name,
             army_number,
             dob,
