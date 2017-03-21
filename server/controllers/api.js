@@ -6,6 +6,7 @@ const DEBUG     = require('debug')('api');
 const ModelAPI  = require('../models/api');
 const Person = require('../models/Persons');
 const SoldierFinger = require('../models/SoldierFinger');
+const Finger = require('../models/Finger');
 const Axios     = require('axios');
 const Co    = require('co');
 const Boom          = require('boom');
@@ -88,6 +89,41 @@ const helperAuth                = require('../helpers/auth');
              console.log('============',e);
              return reply(Boom.internal('READ_ERR'));
          });
+     },
+     addSoldierFinger: function (request, reply) {
+         const fingers = request.payload;
+         Finger.create(fingers).then(function (finger) {
+             return reply(finger);
+         })
+             .catch(function () {
+                 return reply(Boom.internal('WRITE_ERR'));
+             })
+     },
+     removeSoldierFinger: function (request, reply) {
+         const fingerID = request.params.fingerID;
+         Finger.remove({finger_id: fingerID}).then(function () {
+             return reply({result: 'success'});
+         })
+             .catch(function () {
+                 return reply(Boom.internal('WRITE_ERR'));
+             })
+     },
+     getSoldierFingers: function (request, reply) {
+         Finger.find().then(function (fingers) {
+             return reply(fingers);
+         })
+             .catch(function () {
+                 return reply(Boom.internal('READ_ERR'));
+             });
+     },
+     putSoldierFingers: function (request, reply) {
+         Finger.findByIdAndUpdate(request.params.fingerID, { $set: request.payload }).then(function () {
+             return reply({result: 'success'});
+         })
+             .catch(function (e) {
+                 console.log('============',e);
+                 return reply(Boom.internal('READ_ERR'));
+             });
      }
 
 };

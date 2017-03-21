@@ -179,6 +179,12 @@ class Layout extends React.Component {
             });
             socket.on('enrolled', (data) => {
                 console.log('enrolled', data);
+                try {
+                    const d = JSON.parse(data);
+                    superagent.post('/api/soldier_finger').send({finger_id: d.FingerID});
+                } catch (e) {
+
+                }
                 this.notificationSystem.addNotification({
                     message: 'Enrolling completed successfully',
                     level: 'success',

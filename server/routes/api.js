@@ -104,6 +104,54 @@ module.exports = function () {
                 handler: ApiController.putFingers,
                 validate : ApiValidate.validatePutFingers
             }
+        },
+        {
+            method: 'DELETE',
+            path: '/api/solider_finger/{fingerID}',
+            config : {
+                description: 'ABTestConfig channels',
+                notes: 'add fingers soldiers',
+                tags :['api'],
+                auth : 'jwt',
+                handler: ApiController.removeSoldierFinger,
+                validate : ApiValidate.validateSoldierRemoveFinger
+            }
+        },
+        {
+            method: 'GET',
+            path: '/api/solider_finger',
+            config : {
+                description: 'ABTestConfig channels',
+                notes: 'get fingers soldiers',
+                tags :['api'],
+                auth : 'jwt',
+                handler: ApiController.getSoldierFingers,
+                validate : ApiValidate.validateSoldierGetFingers
+            }
+        },
+        {
+            method: 'PUT',
+            path: '/api/solider_finger/{fingerID}',
+            config : {
+                description: 'ABTestConfig channels',
+                notes: 'put fingers soldiers',
+                tags :['api'],
+                auth : 'jwt',
+                handler: ApiController.putSoldierFingers,
+                validate : ApiValidate.validateSoldierPutFingers
+            }
+        },
+        {
+            method: 'POST',
+            path: '/api/soldier_finger',
+            config : {
+                description: 'ABTestConfig channels',
+                notes: 'add fingers soldiers',
+                tags :['api'],
+                auth : 'jwt',
+                handler: ApiController.addSoldierFinger,
+                validate : ApiValidate.validateSoldierAddFingers
+            }
         }
     ];
 }();

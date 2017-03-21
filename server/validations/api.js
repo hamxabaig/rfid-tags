@@ -72,5 +72,27 @@ module.exports = {
             name: Joi.string(),
             finger_id: Joi.number()
         }
+    },
+    validateSoldierRemoveFinger: {
+        params: {
+            fingerID: Joi.number().required()
+        }
+    },
+    validateSoldierAddFingers: {
+        payload: {
+            name: Joi.string(),
+            finger_id: Joi.number().required()
+        }
+    },
+    validateSoldierGetFingers: {
+    },
+    validateSoldierPutFingers: {
+        params: {
+            fingerID: Joi.string().required()
+        },
+        payload: {
+            name: Joi.string(),
+            finger_id: Joi.number()
+        }
     }
 };
