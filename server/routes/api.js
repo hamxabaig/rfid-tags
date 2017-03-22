@@ -107,7 +107,7 @@ module.exports = function () {
         },
         {
             method: 'DELETE',
-            path: '/api/solider_finger/{fingerID}',
+            path: '/api/soldier_finger/{fingerID}',
             config : {
                 description: 'ABTestConfig channels',
                 notes: 'add fingers soldiers',
@@ -119,7 +119,7 @@ module.exports = function () {
         },
         {
             method: 'GET',
-            path: '/api/solider_finger',
+            path: '/api/soldier_finger',
             config : {
                 description: 'ABTestConfig channels',
                 notes: 'get fingers soldiers',
@@ -131,7 +131,7 @@ module.exports = function () {
         },
         {
             method: 'PUT',
-            path: '/api/solider_finger/{fingerID}',
+            path: '/api/soldier_finger/{fingerID}',
             config : {
                 description: 'ABTestConfig channels',
                 notes: 'put fingers soldiers',

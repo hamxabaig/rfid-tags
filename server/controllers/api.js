@@ -109,6 +109,7 @@ const helperAuth                = require('../helpers/auth');
              })
      },
      getSoldierFingers: function (request, reply) {
+         console.log('ok');
          Finger.find().then(function (fingers) {
              return reply(fingers);
          })
