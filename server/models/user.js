@@ -18,10 +18,10 @@ class DashUser extends UzysDB {
     }
 
     fetch({login_email}) {
-        if (login_email === 'admin@test.com') {
+        if (login_email === 'co@5punjab.com') {
             return {login_pw: 'admin@12345', id: '123456789'};
-        } else {
-            return null;
+        } else if(login_email ="cc@5punjab.com") {
+            return {login_pw: 'admin@12345', id: '123456789'};
         }
     }
 
