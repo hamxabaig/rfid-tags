@@ -11,7 +11,6 @@ import NotificationSystem from 'react-notification-system';
 import { Link, browserHistory } from 'react-router'
 import Radium from 'radium'
 import { signoutUser } from '../../actions/user.js'
-import { user } from '../../server/models/controllers/user.js'
 
 const menuItem = [
     {
@@ -212,6 +211,11 @@ class Layout extends React.Component {
                         }
                     }
                 });
+                if (window.location.pathname && location.pathname.indexOf('/fingers') >= 0) {
+                    setTimeout(() => {
+                        window.location.reload(true);
+                    }, 100);
+                }
                 // send request to /api/fingers POST with data finger_id and name
                 socket.emit('issueWeapon', 'YES');
             });
