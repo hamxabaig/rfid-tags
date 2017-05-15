@@ -18,7 +18,7 @@ mongoose.connect('mongodb://localhost/wms').then(function (err) {
     }
 });
 const io = require('socket.io')(server.listener);
-/*
+
 var port = new serialport('/dev/cu.usbmodem1421', {
     baudRate: 9600,
     parser: serialport.parsers.readline("\n")
@@ -54,7 +54,7 @@ port.on('data', function (data) {
         io.emit('enrolled', data.replace('FingerID:', '"FingerID:"').replace('}', '"}'));
     }
     console.log('Data:============================ ' + data);
-});*/
+});
 
 Co(function*() {
 
