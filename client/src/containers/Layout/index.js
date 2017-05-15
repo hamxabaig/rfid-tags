@@ -11,7 +11,6 @@ import NotificationSystem from 'react-notification-system';
 import { Link, browserHistory } from 'react-router'
 import Radium from 'radium'
 import { signoutUser } from '../../actions/user.js'
-import { user } from '../../server/models/controllers/user.js'
 
 const menuItem = [
     {
