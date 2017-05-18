@@ -46,7 +46,30 @@ export default class FingersPage extends Component{
                             <th>Current Unit</th>
                         </tr>
                         </thead>
-
+                        <tr >
+                            <th>22</th>
+                            <th>Iyaz</th>
+                            <th>2070</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr >
+                            <th>25</th>
+                            <th>Satti</th>
+                            <th>45234 </th>
+                            <th>Action</th>
+                        </tr>
+                        <tr >
+                            <th>68</th>
+                            <th>Ghafoor</th>
+                            <th>324340</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr >
+                            <th>23</th>
+                            <th>Khan</th>
+                            <th>2340</th>
+                            <th>Action</th>
+                        </tr>
                         {
                             this.state.fingers.map((finger, key)=>{
                                 return(

@@ -151,13 +151,85 @@ class Layout extends React.Component {
 
         this.setState({
             selectedMenuKey : curMenuKey
-        })
+        });
+
+
+        var socket = io();
+        setTimeout(() => {
+            socket.on('connection', () => {
+                console.log('a user connected');
+            });
+            console.log('Connected with Server');
+
+            socket.on('enrolling', () => {
+                console.log('enrooledd');
+                this.notificationSystem.addNotification({
+                    message: 'Someone is trying to enroll, kindly authorize',
+                    level: 'success',
+                    action: {
+                        label: 'Authorize',
+                        callback: () => {
+                            console.log('auth');
+                            socket.emit('enroll_ack', 'asdf');
+                        }
+                    }
+                });
+            });
+            socket.on('enrolled', (data) => {
+                console.log('enrolled', data);
+                try {
+                    const d = JSON.parse(data);
+                    superagent.post('/api/soldier_finger').send({finger_id: d.FingerID});
+                } catch (e) {
+
+                }
+                this.notificationSystem.addNotification({
+                    message: 'Enrolling completed successfully',
+                    level: 'success',
+                    action: {
+                        label: 'Navigate',
+                        callback: () => {
+
+                        }
+                    }
+                });
+            });
+            socket.on('broadcast', (data) => {
+                console.log(data); // contains RFID and FINGER ID
+                superagent.post('/api/fingers').send({finger_id: data.FingerID, rfid: data.RFID}).set('Authorization', localStorage.getItem('jwt')).end(() => {});
+                this.notificationSystem.addNotification({
+                    message: 'A suspicious person is trying to put his finger on scanner',
+                    level: 'success',
+                    action: {
+                        label: 'Navigate',
+                        callback: () => {
+                            browserHistory.push('/fingers');
+                            console.log('Notification button clicked!');
+                        }
+                    }
+                });
+                if (window.location.pathname && location.pathname.indexOf('/fingers') >= 0) {
+                    setTimeout(() => {
+                        window.location.reload(true);
+                    }, 100);
+                }
+                // send request to /api/fingers POST with data finger_id and name
+                socket.emit('issueWeapon', 'YES');
+            });
+            socket.on('disconnect', () => {
+                console.log('user disconnected');
+            });
+            socket.on('connect_error', (e) => {
+                console.log(e, 'err')
+            });
+        }, 1000);
+
 
         loginMenu.Login.title = this.props.userEmail;
 
     }
     componentDidMount() {
-        
+
     }
 
 

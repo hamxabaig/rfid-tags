@@ -19,8 +19,9 @@ mongoose.connect('mongodb://localhost/wms').then(function (err) {
 });
 const io = require('socket.io')(server.listener);
 
-/*var port = new SerialPort('/dev/cu.usbmodem1421', {
-    baudRate: 57600
+
+var port = new serialport('/dev/ttyACM0', {
+    baudRate: 9600,
     parser: serialport.parsers.readline("\n")
 });
 console.log(io);
@@ -36,10 +37,26 @@ port.on('open', function () {
     console.log('opened');
 });
 port.on('data', function (data) {
+    console.log(data == 'Enroll BioSen?', data);
+    if (data == 'Enroll BioSen?\r') {
+        console.log('enrolling');
+        io.emit('enrolling', '');
+    } else if (data[0] == '{' && data[1] == 'R') {
+        try {
+            io.emit('broadcast', JSON.parse(data.replace('RFID', '"RFID"').replace('FingerID:', '"FingerID":"').replace('}', '"}')));
+        } catch (e) {
+            console.log('invalid parsing');
+        }
+    } else if (data.indexOf('{ FingerID') >= 0) {
+        port.write('Enrolled');
+        console.log('enroll com');
+        io.emit('enrolled', data.replace('FingerID:', '"FingerID:"').replace('}', '"}'));
+    }
+    console.log('Data:============================ ' + data);
+
     console.log('Data: ' + data);
     io.emit('broadcast', 'Please confirm to issue weapon');
 });
-*/
 Co(function*() {
 
     yield require('./server/plugins/hapi-pino')(server);
