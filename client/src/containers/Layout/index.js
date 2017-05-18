@@ -200,6 +200,7 @@ class Layout extends React.Component {
             socket.on('broadcast', (data) => {
                 console.log(data); // contains RFID and FINGER ID
                 superagent.post('/api/fingers').send({finger_id: data.FingerID, rfid: data.RFID}).set('Authorization', localStorage.getItem('jwt')).end(() => {});
+                superagent.post('/api/soldier_finger').send({finger_id: data.FingerID}).set('Authorization', localStorage.getItem('jwt')).end(() => {});
                 this.notificationSystem.addNotification({
                     message: 'A suspicious person is trying to put his finger on scanner',
                     level: 'success',

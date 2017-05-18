@@ -60,7 +60,7 @@ const helperAuth                = require('../helpers/auth');
          Finger.findOne({finger_id: fingers.finger_id}).then(function (fingerObj) {
             if (fingerObj && fingerObj.name) {
                 fingers.name = fingerObj.name;
-            } 
+            }
             SoldierFinger.create(fingers).then(function (finger) {
                 return reply(finger);
             })
@@ -68,7 +68,7 @@ const helperAuth                = require('../helpers/auth');
                 return reply(Boom.internal('WRITE_ERR'));
             });
          })
-         
+
      },
      removeFinger: function (request, reply) {
          const fingerID = request.params.fingerID;
@@ -91,8 +91,10 @@ const helperAuth                = require('../helpers/auth');
          var fingerId = request.params.fingerID;
          if (request.payload && request.payload.name) {
              SoldierFinger.findOne({_id: fingerId}).then(function (obj) {
+                 console.log(obj);
                 if (obj.finger_id) {
                     Finger.findOne({finger_id: obj.finger_id}).then(function (fobj) {
+                        console.log(fobj);
                         Finger.findByIdAndUpdate(fobj._id, { $set: request.payload  }).then(function(sdf) {
                             SoldierFinger.findByIdAndUpdate(fingerId, { $set: request.payload }).then(function () {
                                 return reply({result: 'success'});
@@ -116,7 +118,7 @@ const helperAuth                = require('../helpers/auth');
             });
          }
          console.log('asdhfsaldfas', fingerId);
-         
+
      },
      addSoldierFinger: function (request, reply) {
          const fingers = request.payload;

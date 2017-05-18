@@ -39,10 +39,11 @@ port.on('open', function () {
 });
 port.on('data', function (data) {
     console.log(data == 'Enroll BioSen?', data);
+    console.log(data.indexOf('{ RF'));
     if (data == 'Enroll BioSen?\r') {
         console.log('enrolling');
         io.emit('enrolling', '');
-    } else if (data[0] == '{' && data[1] == 'R') {
+    } else if (data.indexOf('{ RFID') >= 0) {
         try {
             io.emit('broadcast', JSON.parse(data.replace('RFID', '"RFID"').replace('FingerID:', '"FingerID":"').replace('}', '"}')));
         } catch (e) {
