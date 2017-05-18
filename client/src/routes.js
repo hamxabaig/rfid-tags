@@ -10,6 +10,7 @@ import HomePage from './containers/pages/HomePage'
 import GithubPage from './containers/pages/GithubPage'
 import LoginPage from './containers/pages/LoginPage'
 import FingersPage from './containers/pages/FingersPage.js'
+import FingerSoldier from './containers/pages/FingerSoldier.js'
 import SamplePage from './containers/pages/SamplePage.js'
 import form from './containers/pages/form.js';
 import display from './containers/pages/displayPersonnel.js';
@@ -25,6 +26,7 @@ export default function (props = {}) {
                 <Route path='/sample/:id' component={SamplePage} />
                 <Route path='/addPersonnel' component={form} />
                 <Route path='/fingers' component={FingersPage} />
+                <Route path='/view/fingers' component={FingerSoldier} />
                 <Route path='/bootForm' component={bootform} />
                 <Route path='/displayPersonnel' component={display} />
 

@@ -6,6 +6,7 @@ const DEBUG     = require('debug')('api');
 const ModelAPI  = require('../models/api');
 const Person = require('../models/Persons');
 const SoldierFinger = require('../models/SoldierFinger');
+const Finger = require('../models/Finger');
 const Axios     = require('axios');
 const Co    = require('co');
 const Boom          = require('boom');
@@ -56,12 +57,18 @@ const helperAuth                = require('../helpers/auth');
      },
      addFinger: function (request, reply) {
          const fingers = request.payload;
-         SoldierFinger.create(fingers).then(function (finger) {
-             return reply(finger);
+         Finger.findOne({finger_id: fingers.finger_id}).then(function (fingerObj) {
+            if (fingerObj && fingerObj.name) {
+                fingers.name = fingerObj.name;
+            } 
+            SoldierFinger.create(fingers).then(function (finger) {
+                return reply(finger);
+            })
+            .catch(function () {
+                return reply(Boom.internal('WRITE_ERR'));
+            });
          })
-         .catch(function () {
-             return reply(Boom.internal('WRITE_ERR'));
-         })
+         
      },
      removeFinger: function (request, reply) {
          const fingerID = request.params.fingerID;
@@ -81,13 +88,71 @@ const helperAuth                = require('../helpers/auth');
              });
      },
      putFingers: function (request, reply) {
-         SoldierFinger.findByIdAndUpdate(request.params.fingerID, { $set: request.payload }).then(function () {
+         var fingerId = request.params.fingerID;
+         if (request.payload && request.payload.name) {
+             SoldierFinger.findOne({_id: fingerId}).then(function (obj) {
+                if (obj.finger_id) {
+                    Finger.findOne({finger_id: obj.finger_id}).then(function (fobj) {
+                        Finger.findByIdAndUpdate(fobj._id, { $set: request.payload  }).then(function(sdf) {
+                            SoldierFinger.findByIdAndUpdate(fingerId, { $set: request.payload }).then(function () {
+                                return reply({result: 'success'});
+                            })
+                            .catch(function (e) {
+                                return reply(Boom.internal('READ_ERR'));
+                            });
+                        })
+                        .catch(function(ers) {
+                            return reply(Boom.internal('READ_ERR'));
+                        });
+                    });
+                }
+             });
+         } else {
+             SoldierFinger.findByIdAndUpdate(fingerId, { $set: request.payload }).then(function () {
+                return reply({result: 'success'});
+            })
+            .catch(function (e) {
+                return reply(Boom.internal('READ_ERR'));
+            });
+         }
+         console.log('asdhfsaldfas', fingerId);
+         
+     },
+     addSoldierFinger: function (request, reply) {
+         const fingers = request.payload;
+         Finger.create(fingers).then(function (finger) {
+             return reply(finger);
+         })
+             .catch(function () {
+                 return reply(Boom.internal('WRITE_ERR'));
+             })
+     },
+     removeSoldierFinger: function (request, reply) {
+         const fingerID = request.params.fingerID;
+         Finger.remove({finger_id: fingerID}).then(function () {
              return reply({result: 'success'});
          })
-         .catch(function (e) {
-             console.log('============',e);
-             return reply(Boom.internal('READ_ERR'));
-         });
+             .catch(function () {
+                 return reply(Boom.internal('WRITE_ERR'));
+             })
+     },
+     getSoldierFingers: function (request, reply) {
+         console.log('ok');
+         Finger.find().then(function (fingers) {
+             return reply(fingers);
+         })
+             .catch(function () {
+                 return reply(Boom.internal('READ_ERR'));
+             });
+     },
+     putSoldierFingers: function (request, reply) {
+         Finger.findByIdAndUpdate(request.params.fingerID, { $set: request.payload }).then(function () {
+             return reply({result: 'success'});
+         })
+             .catch(function (e) {
+                 console.log('============',e);
+                 return reply(Boom.internal('READ_ERR'));
+             });
      }
 
 };

@@ -6,9 +6,12 @@ import React ,{ Component, PropTypes }from 'react';
 import Header from '../../components/layout/Header';
 import Footer from '../../components/layout/Footer';
 import { connect } from 'react-redux'
+import superagent from 'superagent';
+import NotificationSystem from 'react-notification-system';
 import { Link, browserHistory } from 'react-router'
 import Radium from 'radium'
 import { signoutUser } from '../../actions/user.js'
+
 const menuItem = [
     {
         key : 1,
@@ -37,7 +40,7 @@ const menuItem = [
             {
                 key :3.2,
                 title : 'View Finger Prints',
-                url : '/viewFingerprints'
+                url : '/fingers'
             }
 
         ]
@@ -236,6 +239,7 @@ class Layout extends React.Component {
     render() {
         return (
             <div>
+                <NotificationSystem ref={(e) => this.notificationSystem = e} />
                 <Header menu={menuItem} handleMenuclick={this.handleMenuclick} selectedMenuKey={this.state.selectedMenuKey} isAuthenticated={this.props.authenticated} loginMenu={loginMenu} />
                 {this.props.children}
                 <Footer />

@@ -19,18 +19,19 @@ mongoose.connect('mongodb://localhost/wms').then(function (err) {
 });
 const io = require('socket.io')(server.listener);
 
-
 var port = new serialport('/dev/ttyACM0', {
     baudRate: 9600,
     parser: serialport.parsers.readline("\n")
 });
-console.log(io);
 
 io.on('connection', function (socket) {
-    socket.emit('oh hello');
    socket.on('issueWeapon', function () {
        port.write('YES');
    });
+    socket.on('enroll_ack', function (socket) {
+        console.log('ok');
+        port.write('ACK Enroll');
+    });
 });
 
 port.on('open', function () {
@@ -54,9 +55,11 @@ port.on('data', function (data) {
     }
     console.log('Data:============================ ' + data);
 
-    console.log('Data: ' + data);
-    io.emit('broadcast', 'Please confirm to issue weapon');
+//     console.log('Data: ' + data);
+//     io.emit('broadcast', 'Please confirm to issue weapon');
+// });
 });
+
 Co(function*() {
 
     yield require('./server/plugins/hapi-pino')(server);

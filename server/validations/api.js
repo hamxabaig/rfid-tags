@@ -57,7 +57,7 @@ module.exports = {
     },
     validateAddFingers: {
         payload: {
-            name: Joi.string().required(),
+            rfid: Joi.string().required(),
             finger_id: Joi.number().required()
         }
     },
@@ -66,6 +66,29 @@ module.exports = {
     validatePutFingers: {
         params: {
           fingerID: Joi.string().required()
+        },
+        payload: {
+            rfid: Joi.string(),
+            name: Joi.string(),
+            finger_id: Joi.number()
+        }
+    },
+    validateSoldierRemoveFinger: {
+        params: {
+            fingerID: Joi.number().required()
+        }
+    },
+    validateSoldierAddFingers: {
+        payload: {
+            name: Joi.string(),
+            finger_id: Joi.number().required()
+        }
+    },
+    validateSoldierGetFingers: {
+    },
+    validateSoldierPutFingers: {
+        params: {
+            fingerID: Joi.string().required()
         },
         payload: {
             name: Joi.string(),
